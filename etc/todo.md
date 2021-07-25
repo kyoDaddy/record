@@ -28,6 +28,22 @@
         * AUTH 정보 api (restful api) * mysql
 
         * 포인트 정보 API (webplux api) * postgresql
+            * create table Point.point (poi_id int, mem_id int, poi_dtm timestamp, poi_content varchar(100), poi_point int, poi_type varchar(10), poi_action varchar(10));
+            * select * from postgres.public.point p ;
+            * truncate table postgres.public.point;
+            * CREATE SEQUENCE seq_point_id START 1;
+            * select currval('seq_point_id');
+            * select nextval('seq_point_id');
+            * select setval('seq_point_id', 1);
+
+INSERT INTO public.point
+(poi_id, mem_id, poi_dtm, poi_content, poi_point, poi_type, poi_action)
+VALUES(nextval('public.seq_point_id'), 0, now(), '', 1000, 'DEFAULT', 'PLUS');
+
+
+
+
+
         * 주문 정보 (webplux api) * postgresql
         * 발송 정보 (webplux api) * postgresql
             
