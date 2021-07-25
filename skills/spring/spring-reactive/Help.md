@@ -1,4 +1,6 @@
-webplux 왜 쓸까?
+![alt 로드맵](/spring-reactive-stack.PNG)
+
+* webplux 왜 쓸까?
 
     1. 쓰레드풀의 딜레마
     - cpu/메모리가 충분하지만 쓰레드가 모자라서 처리율 처하... (리눅스 놀고있음)
@@ -25,7 +27,7 @@ webplux 왜 쓸까?
     - 처음부터 끝까지 reactive 해야 한다 (reactive stack / servlet stack 은 나눠져 있음)	
 
 
-어디서 쓰는게 좋을까?
+* 어디서 쓰는게 좋을까?
 
     1. 잘돌아가는 좋은 구조의 스프링 mvc 어플이면 변경 X 
         코드, 디버깅 등 익숙하고, 대부분 라이브러리가 블로킹 방식이라 선택지가 많다.
@@ -35,7 +37,11 @@ webplux 왜 쓸까?
     3. MSA 기반에서 스프링 mvc 와 webplux 혼합해서 사용해도 됨.. (구현 목적에 맞는 걸 그때 그때 사용하면 됨)
 
 
-참고 
-1. 공식문서 : https://spring.io/reactive
+* 참고 
+    1. 공식문서 : https://spring.io/reactive
+
+
+
+
 
 

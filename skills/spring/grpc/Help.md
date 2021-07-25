@@ -1,5 +1,4 @@
-grpc (google Remote Procedure Call) 왜 쓸까?
-
+* grpc (google Remote Procedure Call) 왜 쓸까?
 
     1. rpc (Remote Procedure Call)
         - 네트워크로 연결된 서버 상의 프로시저(함수, 메서드등)을 원격으로 호출할 수 있는 프로세스 간 통신 기술
@@ -35,8 +34,7 @@ grpc (google Remote Procedure Call) 왜 쓸까?
             - stream 옵션 주면 양방향 stream rpc 구현 가능
 
 
-
-어디에 쓰는게 좋을까?
+* 어디에 쓰는게 좋을까?
 
     1. MAS 구조에서의 private 통신간 사용하여 고객에게 응답하는 시간을 최소화하기 위해 사용할 듯.... (이것말고는 당장 생각나느게 없음;)
 
@@ -45,8 +43,8 @@ grpc (google Remote Procedure Call) 왜 쓸까?
 
 
 
-참고
-1. https://velog.io/@ypo09/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C-%EC%84%9C%EB%B9%84%EC%8A%A4%EC%99%80-gRPC%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%84%9C%EB%B2%84-%EA%B0%84-%ED%86%B5%EC%8B%A0-%EC%A0%81%EC%9A%A9%EA%B8%B0-2
-2. https://middlewares.files.wordpress.com/2008/04/17.jpg
-3. https://blog.banksalad.com/tech/production-ready-grpc-in-golang/?gclid=Cj0KCQjw0emHBhC1ARIsAL1QGNfVT7Wbbve-kxYmI2I5bMdYElTP1661Bs1TNFSD5Wfwe8z_CKUvyxYaAv0HEALw_wcB
-4. https://coding-start.tistory.com/367
+* 참고
+    1. https://velog.io/@ypo09/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C-%EC%84%9C%EB%B9%84%EC%8A%A4%EC%99%80-gRPC%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%84%9C%EB%B2%84-%EA%B0%84-%ED%86%B5%EC%8B%A0-%EC%A0%81%EC%9A%A9%EA%B8%B0-2
+    2. https://middlewares.files.wordpress.com/2008/04/17.jpg
+    3. https://blog.banksalad.com/tech/production-ready-grpc-in-golang/?gclid=Cj0KCQjw0emHBhC1ARIsAL1QGNfVT7Wbbve-kxYmI2I5bMdYElTP1661Bs1TNFSD5Wfwe8z_CKUvyxYaAv0HEALw_wcB
+    4. https://coding-start.tistory.com/367
