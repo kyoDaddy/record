@@ -1,4 +1,4 @@
-![alt 로드맵](/spring-reactive-stack.PNG)
+![alt 로드맵](./spring-reactive-stack.PNG)
 
 * webplux 왜 쓸까?
 
