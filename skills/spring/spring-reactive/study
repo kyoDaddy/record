@@ -8,10 +8,12 @@
         - https://tech.io/playgrounds/929/reactive-programming-with-reactor-3/Flux
         - subscribe() 을 해야 데이터가 흐른다.
         - SubscribeOn() : 구독(subscribe)에서 사용할 스레드를 지정 도중 ObserveOn이 호출되어도 SubscribeOn의 스레드 지정에는 영향을 끼치지 않는다.
+        - then() : Flux 종료를 나타내는 Mono<Void>로 변환
 
 
     * Mono (0, 1 개)
         - https://tech.io/playgrounds/929/reactive-programming-with-reactor-3/Mono
+        
 
 
     * StepVerifier
@@ -51,6 +53,32 @@
 
     * Backpressure
         - 데이터를 subscriber 한테 실질적으로 처리할 수 있을 만큼의 수준으로 데이터를 제공 받는게 목적
-        - webflux 기본적으로 31로 고정? 되있다고 한다.
+        - webflux 기본적으로 31로 고정? 되있다고 한다. (고막 터지기 전에 볼륨 조절 느낌..?)
            
-           
+    
+    * Error
+        - https://tech.io/playgrounds/929/reactive-programming-with-reactor-3/Error
+        - onErrorReturn() : 발생한 익셉션이 특정 조건을 충족하는 경우에만 에러 대신에 특정 값을 발생하고 싶다면 Predicate을 인자로 받는 onErrorReturn() 메서드를 사용한다. 
+        - onErrorResume() : 에러 발생하면 다른 신호(시퀀스)나 다른 에러로 대체하기 (stream을 리턴할때)
+        - Exceptions.propagate(e) : exception 을 runtime Exception으로 변환만 해줌 throw 는 따로 선언해줘야함
+
+
+    * 병렬처리
+        - zip() :
+            - (ex) Flux.zip(usernameFlux, firstnameFlux, lastnameFlux)
+                    .map(tuple -> new User(tuple.getT1(), tuple.getT2(), tuple.getT3()));
+
+       
+    * NULL 처라
+        - justOrEmpty() : null 처리 후 종료 
+            - (ex) Mono.justOrEmpty(user);
+        - defaultIfEmpty() : null 이 생기면 default 값을 return
+
+
+    * Reactive Blocking 처리
+        - Mono.block()
+		- Flux.toIteratable()
+        - publishOn() :발햊 기준 별도 쓰레드
+            (ex) publishOn(Schedulers.newElastic("PUB1"), 2)
+        - SubscribeOn() : 구독 기준 별도 쓰레드 
+            (ex) subscribeOn(Schedulers.newElastic("SUB"))
