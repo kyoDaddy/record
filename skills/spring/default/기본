@@ -1,0 +1,20 @@
+- 백기선님 기본 강의
+    - docs : https://docs.google.com/document/d/1fPwXquYpD9pMnZGM5ly6ihkfbiGw_BDKqwNChEz0w6A/edit#
+    - 스프링 트라이앵글
+        - ioc (inversion of controller)
+            - bean : applicationContext 가 알고 있는 객체
+                - CommponentScan
+                    - annotaiton 이 붙어있는 객체를 ioc 컨테이너가 만들어질 때 어노테이션 찾아서 빈으로 자동 등록
+                - 직접등록
+                    - @autowired주입, setter주입, 생성자주입
+            - instance : new 로 만든 객체
+        - aop (aspect oriented programming)
+            - 똑같은데 흝어져 있는 코드들을 묶어서 처리할 목적성
+            - 명시적이게 사용하면 좋음..interface 구현 후 proxy pattern 사용하여 실제 구현 코드가 실행되도록...
+            - interface 구현없이 바로 사용도 가능..
+        - psa (portalble service abstraction)
+            
+
+
+- 인텔리J 플러그인/테마
+    - spring.output.ansi.enabled=ALWAYS
