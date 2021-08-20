@@ -14,7 +14,5 @@
             - interface 구현없이 바로 사용도 가능..
         - psa (portalble service abstraction)
             
-
-
 - 인텔리J 플러그인/테마
     - spring.output.ansi.enabled=ALWAYS
