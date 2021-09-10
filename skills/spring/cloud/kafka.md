@@ -214,3 +214,8 @@
         3. .\bin\windows\connect-distributed.bat .\etc\kafka\connect-distributed.properties
         4. .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my_topic_users --from-beginning
         5. .\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic my_topic_users
+
+
+
+    - 결론
+        - msa 확장 및 응용을 위해서 데이터가 저장되는 메시징 큐잉 서버를 이벤트 소싱 할때 데이터를 저장하는 파트와 저장되있는 데이터를 읽어오는 파트 구분해서 만드는 CQRS 패턴을 사용하면 좀 더 효율적으로 메시징 기반의 시스템이 가능
