@@ -1,8 +1,8 @@
 * powershell 
-    * $ docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=1q2w3e4r -d postgres
+    * $ docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=test!1234 -d postgres
     * docker exec -it postgres /bin/bash
     * psql -U postgres
-    * CREATE USER kyo PASSWORD '1q2w3e4r' SUPERUSER;
+    * CREATE USER kyo PASSWORD 'test!1234' SUPERUSER;
     * psql out command ==> \q
 
 * kitematic
