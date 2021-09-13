@@ -1,0 +1,5 @@
+FROM mariadb
+ENV MYSQL_ROOT_PASSWORD test!1234
+ENV MYSQL_DATABASE mydb
+COPY C:\Users\user\IdeaProjects\dockerfile\mysql_data\mysql /var/lib/mysql
+EXPOSE 3306

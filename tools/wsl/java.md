@@ -1,0 +1,10 @@
+- 참고 : https://jun68.tistory.com/12
+    - 기존 패키지 업데이트 : sudo apt-get update 
+    - java 설치 : sudo apt install openjdk-11-jre-headless
+    - java -version
+    - 환경설정 sudo update-alternatives --config java
+    - java_home 설정 
+        - sudo vi /etc/environment
+        - JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+        - source /etc/environment
+        - echo $JAVA_HOME
