@@ -18,3 +18,7 @@
             keys *index*  # index가 포함된 키 보여줘!
             del abce      # abcd 키 지워줘!
         */
+
+
+    - redis 명령어 참고
+        - https://littleshark.tistory.com/69        
