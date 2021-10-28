@@ -1,10 +1,47 @@
 - 아마존 웹 서비스
+
     - 클라우드 컴퓨팅
-        - EC2 (클라우드 가상 서버)
         - 임대한다.
         - 언제든지 키고 끌수 있다.
+        - 참고
+            - 생활코딩 : https://www.youtube.com/watch?v=8WOr-mnBZn8&list=PLuHgQVnccGMDNWIEgnXjaZ3jgbIo5zQGi&index=13
 
 
-- 참고
-    - 생활코딩 : https://www.youtube.com/watch?v=8WOr-mnBZn8&list=PLuHgQVnccGMDNWIEgnXjaZ3jgbIo5zQGi&index=13
+    - Elastic Beanstalk
+        -  앱을 만들고, 앱을 사용하는 환경을 만든다..
+
+
+    - EC2 (Elastic Compute Cloud) 
+        - 인스턴스 생성 후 임대한다.
+
+            
+    - AWS Lambda
+        - 함수를 생성 후 임대한다.
+        - trigger 
+            - 다른 AWS 서비스들과 연동된다. (S3, SNS 등..)
+
+
+    - AWS ELB (Elastic Load Balancer)
+        - Auto Scaling Group 사용
+
+
+    - AWS Cloud Watch
+        - AWS의 눈 인프라 상태를 관찰한다.
+        - EC2/RDS(Namespace) 등의 인스턴스의 CPU 점유율(지표 metric)을 보고 싶다.
+
+
+    - AWS S3 (Simple Storage Service)
+        - Bucket
+            - 하나의 프로젝트가 하나의 버킷이다
+            - Bucket 안에 폴더가 존재
+                - 폴더 안에 Object가 존재
+                    - Object 권한 설정 가능
+
+
+    
+
+
+
+
+
 
