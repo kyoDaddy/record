@@ -22,3 +22,8 @@
 
     - redis 명령어 참고
         - https://littleshark.tistory.com/69        
+
+    - redis docker 접근이 안될 경우 참고
+        - ifconfig 
+        - redis-cli -h 172.17.0.1
+        - https://hyunki1019.tistory.com/138
