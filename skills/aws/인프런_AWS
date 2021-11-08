@@ -1,0 +1,221 @@
+
+AWS 강의
+- IAM
+    - 유저를 관리하고 접근 레벨 및 권한에 대한 관리
+    - 접근키(Access Key), 비밀키(Secret Access Key)
+        - 주로 AWS API를 사용할때 이용
+    - 매우 세밀한 접근 권한 부여 기능 (Granular Permission)
+    - 비밀번호를 수시로 변경 가능케 해줌
+    - MFA (Multi-Factor Authentication : 다중 인증) 기능
+
+    - 그룹 (Group)
+    - 유저 (User)
+    - 역할 (Role)
+    - 정책 (Policy)
+        - Json 형태, 세밀한 역할을 정할 수 있다.
+        - 정책은 그룹, 역할에 추가시킬 수 있다.
+        - 하나의 그룹 안에 다수의 유저가 존재 가능하다.
+        - 유니버셜 : 지역 설정이 필요 없음
+
+- EC2 
+    - EBS (Elastic Block Storage)
+        - 저장 공간이 생성되어지며, EC2 인스턴스에 부착되는 가상 하드 디스크
+        - 디스크 볼륨 위에 File System이 생성된다.
+        - EBS는 특정 AZ(Availability Zone)에 생성된다.
+            - AZ :  일종의 Disaster Recovery
+    - ELB (Elastic Load Balancer)
+        - 수많은 서버의 흐름을 균형있게 흘려보내는데 중추적인 역할을 함
+        - 하나의 서버로 traffic이 몰리는 병목현상 (bottleneck) 방지
+        - traffic의 흐름을 Unhealthy instance -> healthy instance로 이동
+        - 유형
+            - Application Load Balancer
+                - OSI Layer7에서 작동됨 
+                    - Application 
+                        - End User Layer
+                        - 가장 바깥 부분인 어플리케이션 계층
+                        - HTTP, FTP, SSH, DNS…
+                - Http, Https와 같은 traffic의 load balancing에 가장 적합함
+                - 고급 request 라우팅 설정을 통하여 특정 서버로 request를 보낼 수 있음
+            - Network Load Balancer
+                - OSI Layer4에서 작동됨 
+                    - Transport 
+                        - End to End connection
+                        - TCP,UDP
+                - 매우 빠른 속도를 자랑하며 Production환경에서 종종 쓰임
+                - 극도의 performance가 요구되는 TCP traffic에서 적합함
+                - 초당 수백만개의 request를 아주 미세한 delay로 처리 가능
+            - Classic Load Balancer 
+                - 현재 Legacy로 간주됨, 따라서 거의 쓰이지 않음
+                - Layer7의 HTTP/HTTPS 라우팅 기능 지원
+                - Layer4의 TCP traffic 라우팅 기능돌 지원
+    - X-Forwarded-For Header
+        1. 152.12.3.225 (public ip adores)
+        2. DNS 
+        3. ELB (10.0.0.23) : private ip address
+        4. EC2 (10.0.0.23)
+        5. EC2는 private ip address밖에 볼 수가 없음!
+        6. 이경우 X-Forwarded-For Header 사용하면 호출 public ip 알 수 있음
+    - Route 53
+        - AWS에서 제공하는 DNS 서비스
+            - EC2 instance, S3 Bucket, Load Balancer 등에서 사용
+    - Instance 접근
+        - 터미널 (Mac)
+            - chmod 400 aws1.cer
+            - ssh -I “aws1.cer ec2-user@ec2-15-165-249-183.ap-northeast-2.compute.amazonaws.com” 
+            - 운영체제 업데이트 
+                - yum update -y
+            - 아파치 설치
+                - yum install -y httpd
+                - 재기동 시 자동 시작 : chkconfig httpd on
+- RDS (Relational DB Service)
+    - DB 종류
+        - Mssql, oracle, mysql, poster, aurora, mariaDB
+    - Data Warehousing
+        - Business Intelligence
+        - 리포트 작성, 데이터 분석시 사용
+        - 매우 방대한 분량의 데이터 로드시 사용
+        - OLTP 
+            - INSERT와 같이 종종 사용되어지는, 혹은 규모가 작은 데이터를 불러올때 사용되는 SQL 쿼리가 필요할때 유용
+            - Ex) Order # 210 에만 해당되는 customer 이름, 주소, 시간 정보 INSERT
+        - OLAP
+            - 매우 큰 데이터를 불러올 때 사용. 주로 덩치가 큰 SELECT 쿼리가 사용됨
+            - Ex) 득정 회사 부서의 Net Profit, Products
+    - Back-ups
+        - Automates Backups (AB : 자동 백업)
+            - Retention Period(1-35일) 안의 어떤 시간으로 돌아가게 할 수 있음
+            - AB는 그낭 생성된 스냅샷과 Transaction logs(TL)을 참고함
+            - 디폴트로 AB기능이 설정되어 있으며 백업 정보는 S3에 저장 
+                - RDS 인스턴스 용량을 넘게되면 무료가 아니게 됨
+            - AB동안 약간의 I/O suspension이 존재할 수 있음 -> Latency
+        - DB Snapshots (데이터베이스 스냅샷)
+            - 주로 사용자에 의해 실행됨
+            - 원본 RDS Instance를 삭제해도 스냅샷은 존재함
+                - AB는 Instance 삭제시 snapshot도 삭제됨
+        - 백업시 생성되는 인스턴스
+            - RDS Instance (original.ap-northeast-2.rds.amazonaws.com)
+            - RDS Endpoint (restored.ap-northeast-2.rds.amazonaws.com)
+    - Multi AZ
+        - 원래 존재하는 RDS DB에 무언가 변화(ex: write) 가 생길때 다른 Availability Zone에 똑같은 복제본이 만들어짐 = Synchronize
+        - AWS에 의해서 자동으로 관리가 이루어짐 (No admin intervention)
+        - 원본 RDS DB에 문제가 생길 시 자동으로 다른 AZ의 복제본이 사용됨
+        - 성능 개선을 위해 사용하지 않음
+    - Read Replica
+        - Production DB의 읽기 전용 복제본이 생성됨 (쓰기 불가)
+        - 주로 Read-Heavy DB 작업시 효율성의 극대화를 위해 사용됨 (Scaling)
+        - Disaster Recovery 용도가 아님
+        - 최대 5개 RDS(Read Replica DB) 허용
+        - Read Replica의 Read Replica 생성 가능 (단 Latency 발생)
+        - 각각의 Read Replica는 자기만의 고유 Endpoint 존재
+    - ElasticCache
+        - 클라우드 내에서 In-memory 캐시를 만들어줌
+        - 데이터베이스에서 데이터를 읽어오는 것이 아니라 캐시에서 빠른 속도로 데이터를 읽어옴
+        - Read-Heavy 어플리케이션에서 상단한 Latency 감소 효과 누림
+        - 유형
+            - Memcached
+                - Object 캐시 시스템으로 잘 알려져 있음
+                - ElasticCache는 Memcached의 프로토콜을 디폴트로 따름
+                - EC2 Auto Scaling 처럼 크기가 커졌다 작아졌다 가능함
+                - 오픈소스
+                - 주 사용 목적
+                    - 가장 단순한 캐싱 모델
+                    - Object caching이 주 목적
+                    - 캐시 크기를 마음대로 scaling 원할경우
+            - Redis
+                - Key-Value, Set, List와 같은 형태의 데이터를 In-Memory에 저장 가능함
+                - 오픈소스
+                - Multi-AZ 지원
+                - 주 사용 목적
+                    - List, Set 같은 데이터셋을 사용시
+                    - 리더보드처럼 데이터셋의 랭킹을 정렬하는 용도
+                    - Multi AZ 기능 필요시
+
+- S3 (Simple Storage Service)
+    - 안전하고 가변적인 Object 저장공간을 제공 (ex: Google Cloud)
+    - 편리한 UI 인터페이스를 통해 어디서나 쉽게 데이터를 저장하고 불러올 수 있음
+    - 파일 크기는 0KB ~ 5TB 지원
+    - 저장공간 무제한
+    - Bucket이라는 이름을 사용함 (디렉토리와 유사함)
+    - Bucket은 보편적인 namespace를 사용함 (고유해야함)
+    - 구성요소
+        - Key
+        - Value
+        - Version ID
+        - Metadata
+        - CORS (Cross Origin Resource Sharing)
+    - Data Consistency Model
+        - Read after Write Consistency (PUT)
+        - Eventual Consistency (UPDATE, DELETE)
+    - 스토리지
+        - 일반 S3
+            - 가장 보편적으로 사용되는 스토리지 타입
+            - 높은 내구성, 가용성 (Durablility, Availability)
+        - S3 - IA (Infrequent Access)
+            - 자주 접근되지는 않으나 접근시 빠른 접근이 요구되는 파일이 많을시 유용
+            - 일반 S3에 비해 비용은 저렴하나 접근시 추가 비용 발생
+            - 멀티 AZ를 통한 데이터 저장
+        - S3 - One Zone IA
+            - 단일 AZ를 통한 데이터 저장
+            - 단일 AZ에 의한 데이터 접근 제한 (조금 낮은 가용성)
+            - 데이터 접근시 S3 - IA보다 20% 비용 저렴
+        - Glacier
+            - 거의 접근하지 않을 데이터 저장 시 유용
+            - 매우 저렴한 비용
+            - 데이터 접근시 대략 4-5시간 소요
+        - Intelligent Tiering
+            - 데이터 접근 주기가 불규칙할떄 매우 유용
+            - 2가지 티어 존재
+                - Frequent Tier
+                - Infrequent Tier
+            - 데이터 접근주기에 따라 두가지 티어중 하나로 선택됨
+            - Frequent Tier가 비용이 약간 더 비쌈
+            - 최고의 비용 절감 효율을 누릴 수 있음
+    - 암호화
+        - 파일 업로드/다운로드시
+            - SSL/TLS
+        - 가만히 있을시 (AWS 에서 관리) (Server Side Encryption)
+￼
+            - SEE-S3
+                - AES256
+            - SSE-KMS
+                - 언제, 누가, 어떻게 풀었는지 기록 존재
+            - SSE-C
+
+
+- CloudWatch
+    - AWS 리소스 사용의 실시간 모니터링 기능 지원
+    - 다양한 이벤트들을 수집하여 로그파일로 저장
+    - 이벤트&알람 설정을 통해 SNS, AWS Lambda로 전송 가능
+    - CloudWatch 사용 가능 서비스들 
+        - EC2, RDS, S3, ELB 등등…
+    - 모니터링 종류
+        - Basic Monitoring
+            - 무료
+            - 5분 간격으로 최소한의 Metrics의 제공
+            - CPU 사용량, 디스크 사용량, 네트워크 I/O 제공
+        - Detail Monitoring
+            - 유료
+            - 1분 간격으로 자세한 Metrics
+        - 사용 예시 1
+            - Use Case
+                - 매일 얼마나 많은 사람들이 모바일 앱을 사용하는지 알고 싶음
+            - Potential Issue
+                - 특정날에 수많은 traffice이 몰릴 수 있어 병목현상이 생길 수 있음
+            - Solution
+                - 매일 traffic rate과 특정 버튼의 유저 클릭 회수를 분석하여 더 효율적인 앱개발을 할 수 있는 통찰력을 얻을 수 있음
+        - 사용 예시 2
+            - Use Case
+                - 특정 시간대에 웹서버 상태를 점검하여 비용 절감 목표
+            - Potential Issue
+                - 똑같은 비용을 내며 AWS 리소스들을 사용하지만 낮시간대와 밤시간대에 필요한 서버의 성능은 달라질 수 있기 때문에 금전적 손실이 생길 수 있음 (주로 밤시간대가 낮시간대보다 서버가 오래동안 Idle)
+            - Solution
+                - 알람 설정을 통하여 특정 threshold에 도달했을때 개발자에게 상황을 보고해줌으로서 서버 management를 할 수 있음
+    - 알람
+        - 임의로 정해놓은 값에 도달할 시 알람을 울림
+        - 알람이 울릴 시 특정 이벤트들을 작동시킬 수 있음
+        - Alarm State
+            - Alarm (우리가 설정해둔 조건에 해당하는 알람이 울렷다)
+            - Insufficient (관련된 ec2 인스턴스가 없는 알람)
+            - OK (모두 정상)
+
+
+
