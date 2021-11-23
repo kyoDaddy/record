@@ -25,5 +25,6 @@
 
     - redis docker 접근이 안될 경우 참고
         - ifconfig 
-        - redis-cli -h 172.17.0.1
+        - redis-cli -h 172.17.0.1 (windows docker redis 경우)
+        - redis-cli (mac docker redis 경우)
         - https://hyunki1019.tistory.com/138
